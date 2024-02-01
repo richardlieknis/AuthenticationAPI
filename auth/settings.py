@@ -11,21 +11,31 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv, find_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(find_dotenv())
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qn84x%pb@0p3v2si4n#z5!m3k-c5g-fqs60#j#8zax-_og_y+8'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '127.0.0.1:4200',
+    'localhost:4200',
+]
 
 
 # Application definition
@@ -39,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'users'
+    'django_rest_passwordreset',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -131,12 +142,22 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#################
-# CUSTOM SETTINGS
-#################
+###################
+# CUSTOM SETTINGS #
+###################
+
+FRONTEND_URL = 'http://localhost:4200'
 
 AUTH_USER_MODEL = 'users.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
-# wird gesetzt um Cookies an das frontend senden zu können
 CORS_ALLOW_CREDENTIALS = True
+# wird gesetzt um Cookies an das frontend senden zu können
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.richardlieknis.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hello@richardlieknis.com'
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
