@@ -155,9 +155,24 @@ CORS_ALLOW_CREDENTIALS = True
 # wird gesetzt um Cookies an das frontend senden zu können
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# anstatt console -> smtp
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.richardlieknis.com'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hello@richardlieknis.com'
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+}

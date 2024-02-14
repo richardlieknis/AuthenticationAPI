@@ -1,3 +1,4 @@
+from urllib.parse import quote
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
@@ -92,13 +93,17 @@ class ResetPassword(APIView):
         if user is None:
             raise AuthenticationFailed('User with this email does not exist.')
 
-        # Generate a token for password reset (you might want to use a library for this)
+        # Generate a token for password reset
         reset_token = jwt.encode(
             {'user_id': user.id}, 'reset-secret', algorithm='HS256')
 
+        # Replace the dots in the token with dashes
+        # So that the token can be passed in the URL
+        tokenWithoutDots = reset_token.replace(".", ",")
+
         # Send an email with the reset link containing the token
         # Replace with your frontend URL
-        reset_link = f"{settings.FRONTEND_URL}/reset-password/{reset_token}"
+        reset_link = f"{settings.FRONTEND_URL}/reset-password/{tokenWithoutDots}"
         send_mail(
             'Password Reset',
             f'Click on the following link to reset your password: {reset_link}',
@@ -122,7 +127,7 @@ class CompleteResetPassword(UpdateAPIView):
         if user is None:
             raise AuthenticationFailed('User not found.')
 
-        new_password = request.data.get('new_password', None)
+        new_password = request.data.get('password', None)
 
         if not new_password:
             raise AuthenticationFailed('New password is required.')
