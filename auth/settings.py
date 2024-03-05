@@ -156,12 +156,13 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Email
 # anstatt console -> smtp
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.richardlieknis.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'richardlieknis.com'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hello@richardlieknis.com'
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 
 LOGGING = {
     "version": 1,

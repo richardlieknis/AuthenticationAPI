@@ -105,11 +105,12 @@ class ResetPassword(APIView):
         # Replace with your frontend URL
         reset_link = f"{settings.FRONTEND_URL}/reset-password/{tokenWithoutDots}"
         send_mail(
-            'Password Reset',
-            f'Click on the following link to reset your password: {reset_link}',
+            'Password Reset - KanbaNg',
+            f'<html><body><p>Click on the following link to reset your password for KanbaNg: <a href="{reset_link}">Reset Password</a></p></body></html>',
             settings.EMAIL_HOST_USER,
             [user.email],
             fail_silently=False,
+            html_message=f'<html><body><p>Click on the following link to reset your password for KanbaNg: <a href="{reset_link}">Reset Password</a></p></body></html>',
         )
 
         return Response({'message': 'Password reset link sent to your email.'}, status=status.HTTP_200_OK)
