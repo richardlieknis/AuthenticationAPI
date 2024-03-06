@@ -28,13 +28,19 @@ load_dotenv(find_dotenv())
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '127.0.0.1:4200',
     'localhost:4200',
+    'richardlieknis.com',
+    'www.richardlieknis.com',
+    'api.richardlieknis.com',
+    'kanban.richardlieknis.com',
+    'rychard93.eu.pythonanywhere.com',
+
 ]
 
 
@@ -91,11 +97,11 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'auth_test',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'kanban',
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': 'localhost',
-        'PORT': '3307',
+        'PORT': '3306',
     }
 }
 
@@ -146,16 +152,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CUSTOM SETTINGS #
 ###################
 
-FRONTEND_URL = 'http://localhost:4200'
+FRONTEND_URL = 'https://kanban.richardlieknis.com/'
 
 AUTH_USER_MODEL = 'users.User'
 
+CORS_TRUSTED_ORIGINS = [
+    'https://kanban.richardlieknis.com',
+]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 # wird gesetzt um Cookies an das frontend senden zu können
 
 # Email
-# anstatt console -> smtp
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'richardlieknis.com'
 EMAIL_PORT = 465

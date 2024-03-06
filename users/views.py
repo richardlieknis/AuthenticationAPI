@@ -101,8 +101,6 @@ class ResetPassword(APIView):
         # So that the token can be passed in the URL
         tokenWithoutDots = reset_token.replace(".", ",")
 
-        # Send an email with the reset link containing the token
-        # Replace with your frontend URL
         reset_link = f"{settings.FRONTEND_URL}/reset-password/{tokenWithoutDots}"
         send_mail(
             'Password Reset - KanbaNg',
