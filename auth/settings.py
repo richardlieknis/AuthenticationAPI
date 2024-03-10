@@ -40,6 +40,7 @@ ALLOWED_HOSTS = [
     'api.richardlieknis.com',
     'kanban.richardlieknis.com',
     'rychard93.eu.pythonanywhere.com',
+    'authenticationapi-lfs6.onrender.com',
 
 ]
 
